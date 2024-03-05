@@ -54,11 +54,11 @@ def csv_to_xml(csv_file, xml_file):
 
 arguments = sys.argv
 if len(arguments)!= 3:
-    print("Format incorrect.\n Utilisation : python csv_to_xml.py <csv_file> <xml_file>")
+    print("Format incorrect.\n Utilisation : python3 csv_to_xml.py <csv_file> <xml_file>")
     exit()
 
 if arguments[1][-4:] != ".csv" or arguments[2][-4:] != ".xml":
-    print("Format incorrect de fichier.\n Utilisation : python csv_to_xml.py <csv_file> <xml_file>")
+    print("Format incorrect de fichier.\n Utilisation : python3 csv_to_xml.py <csv_file> <xml_file>")
     exit()
 
 
