@@ -6,4 +6,4 @@ Fonctionnement :
 
 
     Pour compiler le fichier csv_to_xml.py :  
-    csv_to_xml.py <csv_file> <xml_file>
+    python3 csv_to_xml.py <csv_file> <xml_file>
