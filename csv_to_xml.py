@@ -41,9 +41,9 @@ def csv_to_xml(csv_file, xml_file):
             interpretation = ET.SubElement(lsystem, "interpretation")
             params = row[index_action:]
             for i in range(len(params)):
-                action = params[i].split(" ")
-                symbol = ET.SubElement(interpretation, "symbol", action=action[0]).text = symbols[i]
-                param = ET.SubElement(interpretation, "param", value=action[1])
+                #action = params[i].split(" ")
+                symbol = ET.SubElement(interpretation, "rule", symbol=symbols[i]).text = params[i]
+                #param = ET.SubElement(interpretation, "param", value=action[1])
     # Création du fichier XML
     tree = ET.ElementTree(root)
     tree.write(xml_file, xml_declaration=True, encoding='utf-8', method="xml")
