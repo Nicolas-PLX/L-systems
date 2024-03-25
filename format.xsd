@@ -10,7 +10,7 @@
               <xs:element name="substitution">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="rule" maxOccurs="unbounded">
+                    <xs:element name="rule_sub" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">
@@ -25,7 +25,7 @@
               <xs:element name="interpretation">
                 <xs:complexType>
                   <xs:sequence>
-                    <xs:element name="rule" maxOccurs="unbounded">
+                    <xs:element name="rule_int" maxOccurs="unbounded">
                       <xs:complexType>
                         <xs:simpleContent>
                           <xs:extension base="xs:string">

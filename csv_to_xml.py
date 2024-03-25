@@ -37,12 +37,12 @@ def csv_to_xml(csv_file, xml_file):
             rules = row[3:index_action]
  
             for i in range(len(rules)):
-                rule = ET.SubElement(substitution, "rule", symbol=symbols[i]).text = rules[i]
+                rule = ET.SubElement(substitution, "rule_sub", symbol=symbols[i]).text = rules[i]
             interpretation = ET.SubElement(lsystem, "interpretation")
             params = row[index_action:]
             for i in range(len(params)):
                 #action = params[i].split(" ")
-                symbol = ET.SubElement(interpretation, "rule", symbol=symbols[i]).text = params[i]
+                symbol = ET.SubElement(interpretation, "rule_int", symbol=symbols[i]).text = params[i]
                 #param = ET.SubElement(interpretation, "param", value=action[1])
     # Création du fichier XML
     tree = ET.ElementTree(root)
