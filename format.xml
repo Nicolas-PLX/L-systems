@@ -1,20 +1,17 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE format SYSTEM "format.dtd">
+<?xml version="1.0" ?>
 <L-systems>
   <L-system name="snow">
-    <symbols>APM</symbols>
-    <axiom>APM</axiom>
-    <substitution>
-      <rule symbol="A">APPAPPA</rule>
-      <rule symbol="P">AMAPPAMA</rule>
-    </substitution>
-    <interpretation>
-      <symbol action="LINE">A</symbol>
-      <param>30</param>
-      <symbol action="TURN">P</symbol>
-      <param>60</param>
-      <symbol action="TURN">M</symbol>
-      <param>-60</param>
-    </interpretation>
-  </L-system>
+		<symbols>APM</symbols>
+		<axiom>APPAPPA</axiom>
+		<substitution>
+			<rule_sub symbol="A">AMAPPAMA</rule_sub>
+			<rule_sub symbol="P">P</rule_sub>
+			<rule_sub symbol="M">M</rule_sub>
+		</substitution>
+		<interpretation>
+			<rule_int symbol="A">LINE 30</rule_int>
+			<rule_int symbol="P">TURN 60</rule_int>
+			<rule_int symbol="M">TURN -60</rule_int>
+		</interpretation>
+	</L-system>
 </L-systems>
