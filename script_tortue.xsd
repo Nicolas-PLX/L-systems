@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="turtle-script">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="command" maxOccurs="unbounded"/>
+        <xs:element ref="store" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="restore" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="command">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="symbol" type="xs:string" use="optional"/>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="store" type="xs:string"/>
+
+  <xs:element name="restore" type="xs:string"/>
+
+</xs:schema>

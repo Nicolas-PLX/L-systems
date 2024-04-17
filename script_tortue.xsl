@@ -2,7 +2,7 @@
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs">
 
   <xsl:param name="systemName" select="'koch'" />
-  <xsl:param name="iteration" select="0" />
+  <xsl:param name="iteration" select="1" />
 
   <xsl:output method="xml" indent="yes" />
 
@@ -56,9 +56,6 @@
     </xsl:if>
   </xsl:template>
   
-  
-
-
   <xsl:template name="applyRules">
     <xsl:param name="string" />
     <xsl:param name="rules" />
