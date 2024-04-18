@@ -1,25 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
   <xs:element name="turtle-script">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="command" maxOccurs="unbounded"/>
-        <xs:element ref="store" minOccurs="0" maxOccurs="unbounded"/>
-        <xs:element ref="restore" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="command"/>
+          <xs:element ref="store"/>
+          <xs:element ref="restore"/>
+        </xs:choice>
       </xs:sequence>
     </xs:complexType>
   </xs:element>
 
   <xs:element name="command">
-    <xs:complexType>
-      <xs:simpleContent>
-        <xs:extension base="xs:string">
-          <xs:attribute name="symbol" type="xs:string" use="optional"/>
-        </xs:extension>
-      </xs:simpleContent>
-    </xs:complexType>
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:pattern value="(TURN|LINE|MOVE) -?[0-9]+"/>
+      </xs:restriction>
+    </xs:simpleType>
   </xs:element>
+   
 
   <xs:element name="store" type="xs:string"/>
 
