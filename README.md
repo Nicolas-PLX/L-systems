@@ -11,7 +11,7 @@ Pour compiler le fichier csv_to_xml.py :
     
 Pour compiler le fichier script_tortues.xsl :
 
-    java -jar .\saxon-he-10.3.jar -s:<xml_file> -xsl:.\script_tortue.xsl systemName="nom" iteration="n" > out.xml
+    java -jar .\saxon-he-10.3.jar -s:<xml_file> -xsl:.\script_tortue.xsl systemName="nom" iteration="n" > <output.xml>
     
-Avec "nom" qui correspond au nom du L-système, et "n" le nombre d'itérations souhaités.
+Avec "nom" qui correspond au nom du L-système, "n" le nombre d'itérations souhaités, et "output.xml" le nom du fichier de sortie.
     
