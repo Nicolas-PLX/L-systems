@@ -10,6 +10,7 @@
                 <xsl:apply-templates select="command[1]">
                     <xsl:with-param name="X" select="0"/>
                     <xsl:with-param name="Y" select="0"/>
+                    <xsl:with-param name="ang" select="0"/>
                 </xsl:apply-templates>
             </instructions>
         </tracer-script>
@@ -19,12 +20,14 @@
     <xsl:template match="command">
         <xsl:param name="X"/>
         <xsl:param name="Y"/>
+        <xsl:param name="ang"/>
         <xsl:choose>
             <!-- 'LINE' -->
             <xsl:when test="contains(., 'LINE')">
                 <xsl:call-template name="convertLine">
                     <xsl:with-param name="X" select="$X"/>
                     <xsl:with-param name="Y" select="$Y"/>
+                    <xsl:with-param name="ang" select="$ang"/>
                 </xsl:call-template>
             </xsl:when>
             <!-- 'MOVE' -->
@@ -32,6 +35,7 @@
                 <xsl:call-template name="convertMove">
                     <xsl:with-param name="X" select="$X"/>
                     <xsl:with-param name="Y" select="$Y"/>
+                    <xsl:with-param name="ang" select="$ang"/>
                 </xsl:call-template>
             </xsl:when>
             <!-- 'TURN' -->
@@ -39,6 +43,7 @@
                 <xsl:call-template name="convertTurn">
                     <xsl:with-param name="X" select="$X"/>
                     <xsl:with-param name="Y" select="$Y"/>
+                    <xsl:with-param name="ang" select="$ang"/>                
                 </xsl:call-template>
             </xsl:when>
             <!--TODO il reste encore store et restore-->
@@ -49,18 +54,20 @@
     <xsl:template name="convertLine">
         <xsl:param name="X"/>
         <xsl:param name="Y"/>
+        <xsl:param name="ang"/>
         <xsl:variable name="arg" select="number(substring-after(., 'LINE '))"/>
         <command>
             <!-- Calcul des coordonnées pour LINETO -->
             <xsl:text>LINETO </xsl:text>
-            <xsl:value-of select="$X + $arg"/>
+            <xsl:value-of select="round((xs:double($X) + xs:double($arg)  * math:cos($ang * math:pi() div 180)),2)" />
             <xsl:text>,</xsl:text>
-            <xsl:value-of select="$Y"/>
+            <xsl:value-of select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
         </command>
         <!-- Appel récursif pour la prochaine commande -->
         <xsl:apply-templates select="following-sibling::command[1]">
-            <xsl:with-param name="X" select="$X + $arg"/>
-            <xsl:with-param name="Y" select="$Y"/>
+            <xsl:with-param name="X" select="round((xs:double($X) + xs:double($arg)  * math:cos($ang * math:pi() div 180)),2)"/>
+            <xsl:with-param name="Y" select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
+            <xsl:with-param name="ang" select="$ang"/>
         </xsl:apply-templates>
     </xsl:template>
 
@@ -68,18 +75,20 @@
     <xsl:template name="convertMove">
         <xsl:param name="X"/>
         <xsl:param name="Y"/>
+        <xsl:param name="ang"/>
         <xsl:variable name="arg" select="number(substring-after(., 'MOVE '))"/>
         <command>
             <!-- Calcul des coordonnées pour LINETO -->
             <xsl:text>MOVETO </xsl:text>
-            <xsl:value-of select="$X + $arg"/>
+            <xsl:value-of select="round((xs:double($X) + xs:double($arg)  * math:cos($ang * math:pi() div 180)),2)" />
             <xsl:text>,</xsl:text>
-            <xsl:value-of select="$Y"/>
+            <xsl:value-of select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
         </command>
         <!-- Appel récursif pour la prochaine commande -->
         <xsl:apply-templates select="following-sibling::command[1]">
-            <xsl:with-param name="X" select="$X + $arg"/>
-            <xsl:with-param name="Y" select="$Y"/>
+            <xsl:with-param name="X" select="round((xs:double($X) + xs:double($arg)  * math:cos($ang * math:pi() div 180)),2)"/>
+            <xsl:with-param name="Y" select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
+            <xsl:with-param name="ang" select="$ang"/>
         </xsl:apply-templates>
     </xsl:template>
     
@@ -87,15 +96,14 @@
     <xsl:template name="convertTurn">
         <xsl:param name="X"/>
         <xsl:param name="Y"/>
-        <xsl:variable name="theta" select="number(substring-after(., 'TURN '))"/>
-        <!-- Mise à jour des coordonnées pour la prochaine commande LINE -->
-        <!--TODO à trouver les expressions pour les calculs-->
-        <xsl:variable name="newX" select="$X "/>
-        <xsl:variable name="newY" select="$Y"/>
+        <xsl:param name="ang"/>
+        <xsl:variable name="theta" select="number(substring-after(., 'TURN '))"/> 
+        <xsl:variable name="newAng" select="$ang + $theta"/>
         <!-- Appel récursif pour la prochaine commande -->
         <xsl:apply-templates select="following-sibling::command[1]">
-            <xsl:with-param name="X" select="$newX"/>
-            <xsl:with-param name="Y" select="$newY"/>
+            <xsl:with-param name="X" select="$X"/>
+            <xsl:with-param name="Y" select="$Y"/>
+            <xsl:with-param name="ang" select="$newAng"/>
         </xsl:apply-templates>
     </xsl:template>
 </xsl:stylesheet>
