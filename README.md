@@ -15,3 +15,7 @@ Pour compiler le fichier script_tortues.xsl :
     
 Avec "nom" qui correspond au nom du L-système, "n" le nombre d'itérations souhaités, et "output.xml" le nom du fichier de sortie.
     
+
+Pour compiler le fichier script_traceur.xsl :
+
+    java -jar .\saxon-he-10.3.jar -s:<xml_file> -xsl:.\script_traceur.xsl  > <output.xml>

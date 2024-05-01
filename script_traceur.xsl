@@ -2,23 +2,19 @@
 <xsl:stylesheet version="2.0" xmlns:math="http://www.w3.org/2005/xpath-functions/math" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs">
     <xsl:output method="xml" indent="yes"/>
     
-    <!--TODO il reste encore store et restore-->
-
     <!--les méthodes-->
     <!-- Modèle de correspondance pour l'élément racine -->    
     <xsl:template match="/turtle-script">
         <tracer-script>
-            <instructions>
                 <!-- Application du premier template aux commandes -->
-                <xsl:apply-templates select="command[1]">
+                <xsl:apply-templates select="*[1]">
                     <xsl:with-param name="X" select="0"/>
                     <xsl:with-param name="Y" select="0"/>
                     <xsl:with-param name="ang" select="0"/>
                 </xsl:apply-templates>
-            </instructions>
         </tracer-script>
     </xsl:template>
-    
+
     <!-- Modèle de correspondance pour les éléments 'command', 'store' et 'restore' -->
     <xsl:template match="command | store | restore">
         <xsl:param name="X"/>

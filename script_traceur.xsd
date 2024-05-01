@@ -1,0 +1,26 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="tracer-script">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice maxOccurs="unbounded">
+          <xs:element ref="command"/>
+          <xs:element ref="store"/>
+          <xs:element ref="restore"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+    <xs:element name="command">
+        <xs:simpleType>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(LINETO|MOVETO) -?\d+(\.\d+)?,-?\d+(\.\d+)?"/>
+        </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="store" type="xs:string"/>
+
+    <xs:element name="restore" type="xs:string"/>
+</xs:schema>
