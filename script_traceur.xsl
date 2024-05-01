@@ -5,7 +5,8 @@
     <!--TODO il reste encore store et restore-->
 
     <!--les méthodes-->
-    <!-- Modèle de correspondance pour l'élément racine -->    <xsl:template match="/turtle-script">
+    <!-- Modèle de correspondance pour l'élément racine -->    
+    <xsl:template match="/turtle-script">
         <tracer-script>
             <instructions>
                 <!-- Application du premier template aux commandes -->
@@ -17,18 +18,35 @@
             </instructions>
         </tracer-script>
     </xsl:template>
-        
-    <!-- Template for modifying store/restore commands -->
-    <xsl:template match="store">
-        <xsl:copy-of select="."/>
-    </xsl:template>
-
-    <xsl:template match="restore">
-        <xsl:copy-of select="."/>
+    
+    <!-- Modèle de correspondance pour les éléments 'command', 'store' et 'restore' -->
+    <xsl:template match="command | store | restore">
+        <xsl:param name="X"/>
+        <xsl:param name="Y"/>
+        <xsl:param name="ang"/>
+        <xsl:choose>
+            <!-- Si c'est une commande -->
+            <xsl:when test="self::command">
+                <xsl:call-template name="Commands">
+                    <xsl:with-param name="X" select="$X"/>
+                    <xsl:with-param name="Y" select="$Y"/>
+                    <xsl:with-param name="ang" select="$ang"/>
+                </xsl:call-template>
+            </xsl:when>
+            <!-- Si c'est store ou restore -->
+            <xsl:otherwise>
+                <xsl:copy/>
+                    <xsl:apply-templates select="following-sibling::*[1]">
+                        <xsl:with-param name="X" select="$X"/>
+                        <xsl:with-param name="Y" select="$Y"/>
+                        <xsl:with-param name="ang" select="$ang"/>
+                    </xsl:apply-templates>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- Modèle de correspondance pour les élément 'command' -->
-    <xsl:template match="command">
+    <xsl:template name="Commands">
         <xsl:param name="X"/>
         <xsl:param name="Y"/>
         <xsl:param name="ang"/>
@@ -74,7 +92,7 @@
             <xsl:value-of select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
         </command>
         <!-- Appel récursif pour la prochaine commande -->
-        <xsl:apply-templates select="following-sibling::command[1]">
+         <xsl:apply-templates select="following-sibling::*[1]">
             <xsl:with-param name="X" select="round((xs:double($X) + xs:double($arg)  * math:cos($ang * math:pi() div 180)),2)"/>
             <xsl:with-param name="Y" select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
             <xsl:with-param name="ang" select="$ang"/>
@@ -95,7 +113,7 @@
             <xsl:value-of select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
         </command>
         <!-- Appel récursif pour la prochaine commande -->
-        <xsl:apply-templates select="following-sibling::command[1]">
+        <xsl:apply-templates select="following-sibling::*[1]">
             <xsl:with-param name="X" select="round((xs:double($X) + xs:double($arg)  * math:cos($ang * math:pi() div 180)),2)"/>
             <xsl:with-param name="Y" select="round((xs:double($Y) + xs:double($arg)  * math:sin($ang * math:pi() div 180)),2)"/>
             <xsl:with-param name="ang" select="$ang"/>
@@ -110,7 +128,7 @@
         <xsl:variable name="theta" select="number(substring-after(., 'TURN '))"/> 
         <xsl:variable name="newAng" select="$ang + $theta"/>
         <!-- Appel récursif pour la prochaine commande -->
-        <xsl:apply-templates select="following-sibling::command[1]">
+        <xsl:apply-templates select="following-sibling::*[1]">
             <xsl:with-param name="X" select="$X"/>
             <xsl:with-param name="Y" select="$Y"/>
             <xsl:with-param name="ang" select="$newAng"/>
