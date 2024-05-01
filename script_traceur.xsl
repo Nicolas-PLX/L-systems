@@ -2,6 +2,8 @@
 <xsl:stylesheet version="2.0" xmlns:math="http://www.w3.org/2005/xpath-functions/math" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" exclude-result-prefixes="xs">
     <xsl:output method="xml" indent="yes"/>
     
+    <!--TODO il reste encore store et restore-->
+
     <!--les méthodes-->
     <!-- Modèle de correspondance pour l'élément racine -->    <xsl:template match="/turtle-script">
         <tracer-script>
@@ -14,6 +16,15 @@
                 </xsl:apply-templates>
             </instructions>
         </tracer-script>
+    </xsl:template>
+        
+    <!-- Template for modifying store/restore commands -->
+    <xsl:template match="store">
+        <xsl:copy-of select="."/>
+    </xsl:template>
+
+    <xsl:template match="restore">
+        <xsl:copy-of select="."/>
     </xsl:template>
 
     <!-- Modèle de correspondance pour les élément 'command' -->
@@ -46,7 +57,6 @@
                     <xsl:with-param name="ang" select="$ang"/>                
                 </xsl:call-template>
             </xsl:when>
-            <!--TODO il reste encore store et restore-->
         </xsl:choose>
     </xsl:template>
 
