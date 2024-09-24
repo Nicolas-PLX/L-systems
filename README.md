@@ -1,5 +1,7 @@
 # README 
 
+Le sujet du projet se trouve dans la rubrique "Resource".
+
 ### Etudiant  
 
 PENELOUX Nicolas 22001302  
